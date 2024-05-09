@@ -7,11 +7,10 @@
   <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script type="text/babel">
-    function App() {
-      const [amount, setAmount] = React.useState(""); // state 1
-      const [inverted, setInverted] = React.useState(false); // state 2
+    function MinutesToHours() {
+      const [amount, setAmount] = React.useState("");
+      const [inverted, setInverted] = React.useState(false);
 
-      // INPUT 변화 일어난 값으로 amount 데이터 업데이트_리랜더링
       const onChange = (event) => {
         setAmount(event.target.value);
       };
@@ -22,19 +21,15 @@
       };
       return (
         <div>
-          <h1 className="hi">Super Converter </h1>
           <div>
             <label htmlFor="minutes">Minutes </label>
             <input
-              //input value, state로 연결(어디서든-외부에서도- input의 value 수정 가능)
-              value={inverted ? amount * 60 : amount} //삼항연산자(ternary operator)
+              value={inverted ? amount * 60 : amount}
               id="minutes"
               placeholder="Minutes"
               type="number"
-              //input에서 리스닝 하고 있는 데이터 업데이트
               onChange={onChange}
-              //inverted true여야 true 반환
-              disabled={inverted === true} //-- 그냥 간결하게 inverted만 써도 ok
+              disabled={inverted === true}
             />
           </div>
           <div>
@@ -45,12 +40,40 @@
               placeholder="Hours"
               type="number"
               onChange={onChange}
-              //inverted false여야 true 반환
-              disabled={inverted === false} //-- 그냥 간결하게 !inverted만 써도 ok
+              disabled={inverted === false}
             />
           </div>
           <button onClick={reset}>Reset</button>
           <button onClick={onInvert}>Invert</button>
+        </div>
+      );
+    }
+    function KmToMiles() {
+      return (
+        <div>
+          <h3>Km to Miles</h3>
+        </div>
+      );
+    }
+    function App() {
+      const [index, setIndex] = React.useState("0");
+      const onSelect = (event) => {
+        setIndex(event.target.value);
+      };
+
+      return (
+        <div>
+          <h1 className="hi">Super Converter </h1>
+          <select value={index} onChange={onSelect}>
+            <option value="0">Choose Convert Item</option>
+            <option value="1">Minutes -- Hours</option>
+            <option value="2">Km -- Miles</option>
+          </select>
+          {index === "1" ? (
+            <MinutesToHours />
+          ) : index === "2" ? (
+            <KmToMiles />
+          ) : null}
         </div>
       );
     }
